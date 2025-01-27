@@ -1,0 +1,55 @@
+@import '../styles/index.scss';
+
+.cart__page{
+  min-height: calc(100vh - 115px);
+  width: 100%;
+  padding: 40px 80px;
+  @include mobile{
+    height: calc(100vh - 85px);
+    padding: 10px;
+  }
+  h3{
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+  .container{
+    width: 100%;
+    display: flex;
+    @include mobile{
+      flex-direction: column;
+    }
+    .left{
+      width: 60%;
+      background: pink;
+      @include mobile{
+        width: 100%;
+      }
+      p{
+        font-size: 14px;
+        font-weight: bold;
+        @include mobile{
+          font-size: 12px;
+        }
+      }
+      .heading{
+        display: flex;
+        justify-content: space-between;
+        .other{
+          display: flex;
+          gap: 30px;
+          @include mobile{
+            gap: 10px;
+          }
+        }
+      }
+    }
+    .right{
+      width: 40%;
+      background: lightblue;
+      @include mobile{
+        width: 100%;
+      }
+    }
+  }
+  
+}
