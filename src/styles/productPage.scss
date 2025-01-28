@@ -1,7 +1,7 @@
 @import '../styles/index.scss';
 
 .products{
-  height: calc(100vh - 115px);
+  height: calc(100vh - 140px);
   width: 100%;
   padding-top: 10px;
   h2{
@@ -16,16 +16,29 @@
     flex-wrap: wrap;
     gap: 20px;
     overflow-y: auto;
+    overflow-x: hidden;
     @include tab{
       padding: 20px 80px;
     }
     @include mobile{
       padding: 10px 40px;
     }
-    
-  }
-  .cards__container::-webkit-scrollbar{
-    display: none;
+    .no__products{
+      height: 60vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      h1{
+        font-size: 62px;
+        text-align: center;
+        font-weight: 900;
+        color: gray;
+        @include mobile{
+          font-size: 42px;
+        }
+      }
+    }
   }
   @include mobile{
     height: calc(100vh - 85px);

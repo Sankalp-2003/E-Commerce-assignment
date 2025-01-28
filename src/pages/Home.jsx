@@ -2,7 +2,7 @@ import React from "react";
 import "../styles/home.scss";
 import ProductPage from "./ProductPage";
 
-const Home = () => {
+const Home = ({ searchTerm }) => {
   return (
     <>
       <div className="home">
@@ -33,7 +33,7 @@ const Home = () => {
           <button>shop now</button>
         </div>
       </div>
-      <ProductPage />
+      <ProductPage searchTerm={searchTerm} />
     </>
   );
 };

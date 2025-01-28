@@ -1,42 +1,39 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import "../styles/productPage.scss";
 import ProductCard from "../components/ProductCard";
 import { FallingLines } from "react-loader-spinner";
 import { ProductContext } from "../context/ProductProvider";
 import { Link } from "react-router-dom";
 
-const ProductPage = () => {
+const ProductPage = ({ searchTerm, isSmallScreen, searchCategory }) => {
   const { products, loading } = useContext(ProductContext);
-  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 850) {
-        setIsSmallScreen(true);
-      } else {
-        setIsSmallScreen(false);
-      }
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.addEventListener("resize", handleResize);
-    };
-  }, []);
+  const filteredProducts = products.filter((product) => {
+    if (searchCategory) {
+      return product.category.toLowerCase().includes(searchTerm.toLowerCase());
+    } else {
+      return product.title.toLowerCase().includes(searchTerm.toLowerCase());
+    }
+  });
 
   return (
     <div className="products">
       <h2>Products</h2>
       {!loading ? (
         <div className="cards__container">
-          {products.map((elem) => (
-            <div key={elem.id}>
-              <Link to={`/product/${elem.id}`}>
-                <ProductCard product={elem} />
-              </Link>
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map((elem) => (
+              <div key={elem.id}>
+                <Link to={`/product/${elem.id}`}>
+                  <ProductCard product={elem} />
+                </Link>
+              </div>
+            ))
+          ) : (
+            <div className="no__products">
+              <h1>No products found!</h1>
             </div>
-          ))}
+          )}
         </div>
       ) : (
         <div className="loader">
