@@ -3,11 +3,15 @@ import "../styles/productDetails.scss";
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { ProductContext } from "../context/ProductProvider";
+import { Grid } from "react-loader-spinner";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../redux/slices/cartSlice";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const { products } = useContext(ProductContext);
   const [product, setProduct] = useState(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const foundProduct = products.find((p) => p.id === parseInt(id));
@@ -15,7 +19,20 @@ const ProductDetails = () => {
   }, [id, products]);
 
   if (!product) {
-    return <div>Not Found</div>;
+    return (
+      <div id="not__found">
+        <Grid
+          visible={true}
+          height="80"
+          width="80"
+          color="#000"
+          ariaLabel="grid-loading"
+          radius="12.5"
+          wrapperStyle={{}}
+          wrapperClass="grid-wrapper"
+        />
+      </div>
+    );
   }
 
   const renderStars = (rating) => {
@@ -40,6 +57,10 @@ const ProductDetails = () => {
     );
   };
 
+  const handleAddToCart = () => {
+    dispatch(addToCart(product));
+  };
+
   return (
     <div className="productDetails">
       <div className="left box">
@@ -52,7 +73,9 @@ const ProductDetails = () => {
           <div className="desc">{product.description}</div>
           <div className="stars">{renderStars(product.rating?.rate || 0)}</div>
         </div>
-        <div className="addto__Cart">Add to Cart</div>
+        <div className="addto__Cart" onClick={handleAddToCart}>
+          Add to Cart
+        </div>
       </div>
     </div>
   );

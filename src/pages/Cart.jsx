@@ -1,54 +1,119 @@
-import React, { useState } from "react";
 import "../styles/cart.scss";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { useDispatch, useSelector } from "react-redux";
+import { removeFromCart, updateQuantity } from "../redux/slices/cartSlice";
+import { Link } from "react-router-dom";
 const Cart = () => {
-  const [quantity, setQuantity] = useState(1);
-  const increment = () => setQuantity((prev) => prev + 1);
-  const decrement = () => {
-    if (quantity > 1) setQuantity((prev) => prev - 1);
+  const { items, totalQuantity, totalPrice } = useSelector(
+    (state) => state.cart
+  );
+  const dispatch = useDispatch();
+
+  const handleRemove = (id) => {
+    dispatch(removeFromCart(id));
+  };
+
+  const handleQuantityChange = (id, quantity) => {
+    dispatch(updateQuantity({ id, quantity }));
   };
   return (
     <div className="cart__page">
       <h3>SHOPPING CART</h3>
-      <div className="container">
-        <div className="left">
-          <div className="heading">
-            <div className="main">
-              <p>PRODUCTS</p>
+      {items.length ? (
+        <div className="container">
+          <div className="left">
+            <div className="heading">
+              <div className="main">
+                <p>PRODUCTS</p>
+              </div>
+              <div className="other">
+                <p>PRICE</p>
+                <p>QUANTITY</p>
+                <p>SUBTOTAL</p>
+                <p>REMOVE</p>
+              </div>
             </div>
-            <div className="other">
-              <p>PRICE</p>
-              <p>QUANTITY</p>
-              <p>SUBTOTAL</p>
-              <p>REMOVE</p>
-            </div>
+            {items.map((item) => (
+              <div className="list" key={item.id}>
+                <div className="product">
+                  <div className="img__container">
+                    <img src={item.image} alt={item.title} />
+                  </div>
+                  <div className="title">
+                    {item.title.length < 23
+                      ? item.title
+                      : item.title.slice(0, 25) + "..."}
+                  </div>
+                </div>
+                <div className="bottom">
+                  <div className="price">₹ {(item.price * 82).toFixed(2)}</div>
+                  <div className="quantityButton">
+                    <button
+                      className="decrement"
+                      onClick={() =>
+                        handleQuantityChange(item.id, item.quantity - 1)
+                      }
+                    >
+                      -
+                    </button>
+                    <span className="quantity">{item.quantity}</span>
+                    <button
+                      className="increment"
+                      onClick={() =>
+                        handleQuantityChange(item.id, item.quantity + 1)
+                      }
+                    >
+                      +
+                    </button>
+                  </div>
+                  <div className="subtotal price">
+                    ₹ {(item.totalPrice * 82).toFixed(2)}
+                  </div>
+                  <div className="remove" onClick={() => handleRemove(item.id)}>
+                    <RiDeleteBin6Line />
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
-          <div className="list">
-            <div className="img__container">
-              <img
-                src="https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8d2F0Y2h8ZW58MHx8MHx8fDA%3D"
-                alt=""
-              />
-            </div>
-            <div className="title">Watch</div>
-            <div className="price">₹ 3000</div>
-            <div className="quantityButton">
-              <button className="decrement" onClick={decrement}>
-                -
-              </button>
-              <span className="quantity">{quantity}</span>
-              <button className="increment" onClick={increment}>
-                +
-              </button>
-            </div>
-            <div className="subtotal">₹ 3000</div>
-            <div className="remove">
-              <RiDeleteBin6Line />
+          <div className="right">
+            <div className="cart__card">
+              <div className="col col1">
+                <h5>CART TOTAL:</h5>
+                <span>
+                  <p>TOTAL ITEMS</p>
+                  <p>{totalQuantity}</p>
+                </span>
+              </div>
+              <div className="col col2">
+                <h5>Shipping:</h5>
+                <div className="address">
+                  <p>XYZ, Bangalore</p>
+                  <span>change address</span>
+                </div>
+              </div>
+              <div className="col col3">
+                <div className="top">
+                  <p>Total Price</p>
+                  <p>₹ {(totalPrice * 82).toFixed(2)}</p>
+                </div>
+                <Link to="/checkout">
+                  <button>Proceed to Checkout</button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
-        <div className="right">hdfi</div>
-      </div>
+      ) : (
+        <div className="empty__cart">
+          <div className="empty__cart__img">
+            <img
+              src="https://e-shop-sankalp-2003.netlify.app/assets/emptycart-SWUyC74Z.png"
+              alt="Empty"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

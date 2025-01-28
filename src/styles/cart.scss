@@ -8,27 +8,37 @@
     height: calc(100vh - 85px);
     padding: 10px;
   }
+  @include tab{
+    padding: 10px;
+  }
   h3{
     font-size: 32px;
+    font-weight: 500;
     margin-bottom: 10px;
   }
   .container{
     width: 100%;
     display: flex;
+    overflow-y: auto;
     @include mobile{
+      flex-direction: column;
+    }
+    @include tab{
       flex-direction: column;
     }
     .left{
       width: 60%;
-      background: pink;
       @include mobile{
+        width: 100%;
+      }
+      @include tab{
         width: 100%;
       }
       p{
         font-size: 14px;
         font-weight: bold;
         @include mobile{
-          font-size: 12px;
+          font-size: 10px;
         }
       }
       .heading{
@@ -36,18 +46,207 @@
         justify-content: space-between;
         .other{
           display: flex;
-          gap: 30px;
+          gap: 50px;
+          @include mobile{
+            gap: 5px;
+          }
+        }
+      }
+      .list{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        margin-bottom: 10px;
+        .product{
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          @include mobile{
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0px;
+          }
+          .img__container{
+            height: 100px;
+            width: 100px;
+            @include mobile{
+              height: 50px;
+              width: 50px;
+            }
+            img{
+              height: 100%;
+              width: 100%;
+              object-fit: contain;
+            }
+          }
+          .title{
+            font-size: 22px;
+            font-weight: bold;
+            @include mobile{
+              font-size: 14px;
+              width: 110px;
+            }
+          }
+        }
+        .bottom{
+          display: flex;
+          align-items: center;
+          gap: 40px;
           @include mobile{
             gap: 10px;
           }
+          .price{
+            font-size: 18px;
+            @include mobile{
+              font-size: 8px;
+            }
+          }
+          .quantityButton{
+            button{
+              font-size: 20px;
+              background-color: #fff;
+              border: none;
+              border: 1px solid rgba(128, 128, 128, 0.504);
+              padding: 5px;
+              cursor: pointer;
+              @include mobile{
+                font-size: 8px;
+              }
+            }
+            span{
+              font-size: 20px;
+              padding: 5px;
+              border: 1px solid rgba(128, 128, 128, 0.504);
+              @include mobile{
+                font-size: 8px;
+              }
+            }
+          }
+          .remove{
+            color: #991B1B;
+            font-size: 22px;
+            cursor: pointer;
+            @include mobile{
+              font-size: 14px;
+            }
+          }
         }
+        
       }
     }
     .right{
       width: 40%;
-      background: lightblue;
+      padding: 40px;
+      position: relative;
       @include mobile{
         width: 100%;
+      }
+      @include tab{
+        width: 100%;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+      }
+      .cart__card{
+        position: fixed;
+        height: 400px;
+        width: 470px;
+        background: #fff;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        border-radius: 20px;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        @include tab{
+          position: static;
+        }
+        @include mobile{
+          width: 100%;
+          height: unset;
+        }
+        .col{
+          flex: 3;
+          border-bottom: 1px solid #dadada;
+          padding: 10px 0;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+        :nth-child(3){
+         border: unset;
+        }
+        .col1{
+          
+          h5{
+            font-size: 18px;
+          }
+          span{
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+          }
+        }
+        .col2{
+          h5{
+            font-size: 18px;
+            font-weight: 200;
+          }
+          .address{
+            display: flex;
+            justify-content: space-between;
+            span{
+              color: blue;
+              cursor: pointer;
+            }
+          }
+        }
+        .col3{
+          .top{
+            display: flex;
+            justify-content: space-between;
+            p{
+              font-size: 20px;
+            }
+          }
+          button{
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #991B1B;
+            color: #fff;
+            font-size: 22px;
+            cursor: pointer;
+            @include mobile{
+              font-size: 16px;
+              padding: 5px;
+              margin-top: 10px;
+            }
+          }
+          button:hover{
+            background-color: #c42121;
+          }
+        }
+      }
+    }
+  }
+  .empty__cart{
+    height: 65vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .empty__cart__img{
+      height: 90%;
+      width: 900px;
+      @include mobile{
+        width: 90%;
+      }
+      img{
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
       }
     }
   }
